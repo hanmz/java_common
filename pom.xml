@@ -9,72 +9,57 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <kafka-client-version>0.9.0.1</kafka-client-version>
         <lombok.version>1.16.8</lombok.version>
         <fastjson.version>1.2.8</fastjson.version>
         <spring.version>4.2.5.RELEASE</spring.version>
         <guava.version>19.0</guava.version>
-        <joda-time.version>2.3</joda-time.version>
-        <sync-http-client>2.0.11</sync-http-client>
         <junit.version>4.11</junit.version>
     </properties>
 
     <dependencies>
+        <!-- config 配置中心-->
         <dependency>
-            <groupId>com.ecwid.consul</groupId>
-            <artifactId>consul-api</artifactId>
-            <version>1.1.11</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.orbitz.consul/consul-client -->
-        <dependency>
-            <groupId>com.orbitz.consul</groupId>
-            <artifactId>consul-client</artifactId>
-            <version>0.12.6</version>
+            <groupId>com.github.colin-lee</groupId>
+            <artifactId>config-core</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
-        <!-- 基于netty异步http-client -->
+        <!-- mybatis start mybatis中间件-->
         <dependency>
-            <groupId>org.asynchttpclient</groupId>
-            <artifactId>async-http-client</artifactId>
-            <version>${sync-http-client}</version>
+            <groupId>com.github.colin-lee</groupId>
+            <artifactId>mybatis-spring-support</artifactId>
+            <version>1.0.8</version>
         </dependency>
-        <!-- 汉语拼音转换 -->
+        <!-- Jdbc driver(jdbc driver必须有) -->
         <dependency>
-            <groupId>com.belerweb</groupId>
-            <artifactId>pinyin4j</artifactId>
-            <version>2.5.1</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.36</version>
         </dependency>
+        <!-- mybatis end-->
 
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${joda-time.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>${kafka-client-version}</version>
-        </dependency>
-
+        <!--lombok 代码生成工具，简化编码-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
-        <!-- fast json by alibaba -->
+
+        <!-- fast json by alibaba 阿里巴巴json解析工具-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
 
+        <!--guava googlejava开发工具包-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-        <!-- Spring core & mvc -->
+
+        <!-- Spring core & mvc spring套件-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -96,8 +81,26 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- spring end -->
-        <!--junit-->
+
+        <!-- view template jsp模板jetbrick-->
+        <dependency>
+            <groupId>com.github.subchen</groupId>
+            <artifactId>jetbrick-template-springmvc</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+
+        <!--junit 单元测试部分-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -120,46 +123,17 @@
             <version>1.0-groovy-2.4</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.jdt/org.eclipse.jdt.core -->
-        <dependency>
-            <groupId>org.eclipse.jdt</groupId>
-            <artifactId>org.eclipse.jdt.core</artifactId>
-            <version>3.10.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/co.paralleluniverse/quasar-core -->
-        <dependency>
-            <groupId>co.paralleluniverse</groupId>
-            <artifactId>quasar-core</artifactId>
-            <version>0.7.5</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/co.paralleluniverse/comsat-httpclient -->
-        <dependency>
-            <groupId>co.paralleluniverse</groupId>
-            <artifactId>comsat-httpclient</artifactId>
-            <version>0.7.0</version>
-        </dependency>
-
-        <!-- quasar-maven-plugin -->
-        <dependency>
-            <groupId>com.vlkan</groupId>
-            <artifactId>quasar-maven-plugin</artifactId>
-            <version>0.7.3</version>
-        </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central</id>
-            <name>bintray</name>
-            <url>http://jcenter.bintray.com</url>
-        </repository>
-    </repositories>
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!--编译指定编码插件-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -170,24 +144,14 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-
-            <!-- 跑quasar单元测试 -->
+            <!--打成 war 包时候，自动更改 war 包名字的配置-->
             <plugin>
-                <groupId>com.vlkan</groupId>
-                <artifactId>quasar-maven-plugin</artifactId>
-                <version>0.7.3</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
                 <configuration>
-                    <check>true</check>
-                    <debug>true</debug>
-                    <verbose>true</verbose>
+                    <warName>hfp</warName>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>instrument</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
